@@ -1,6 +1,6 @@
 "use server";
 
-import { db } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { smiqResponses } from "@/db/schema";
 
 export type SubmitPayload = {
@@ -30,7 +30,7 @@ export async function submitResponse(
   }
 
   try {
-    await db.insert(smiqResponses).values({
+    await getDb().insert(smiqResponses).values({
       segment,
       segmentLabel,
       smiqAnswer: smiqAnswer.trim(),
