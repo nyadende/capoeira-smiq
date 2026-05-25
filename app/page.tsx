@@ -5,26 +5,33 @@ export default function Home() {
       {/* Nav */}
       <nav>
         <a href="#" className="nav-logo">
-          Capoeira International <span>Community</span>
+          Capoeira International
         </a>
-        <a href="/smiq" className="nav-cta">Join the Conversation</a>
+        <a href="/smiq" className="nav-cta">Join the Community</a>
       </nav>
 
       {/* Hero */}
       <section className="hero">
         <div className="hero-eyebrow">Capoeira International</div>
         <h1>
-          One art.<br />
-          <em>Many journeys.</em><br />
-          One conversation.
+          Building<br />
+          <em>Our Future</em><br />
+          Together
         </h1>
         <p className="hero-sub">
-          We are building something for every person who has ever stepped into a
-          roda — beginner, mestre, or someone who once trained and walked away.
-          But first, we need to hear from you.
+          We are a community of practitioners, teachers and students from across
+          the globe who believe that Capoeira is the most magnificent sport on
+          Earth, a powerful vehicle for profound transformation and an
+          incomparable force for good. Whether you are just starting your
+          Capoeira journey, leading others as they start theirs, or once belonged
+          but walked away, there is a place for you here.
+        </p>
+        <p className="hero-sub">
+          If you want to be a part of shaping the future of this art form, we
+          welcome you.
         </p>
         <a href="/smiq" className="hero-cta">
-          Join the Conversation
+          Join the Effort
           <span className="arrow">→</span>
         </a>
         <p className="hero-note">Takes 2 minutes &nbsp;·&nbsp; No spam, ever</p>
@@ -41,17 +48,23 @@ export default function Home() {
           <em>for capoeiristas.</em>
         </h2>
         <p>
-          Capoeira International exists because this art deserves more than
-          scattered Facebook groups and word-of-mouth. We are practitioners,
-          teachers, and students from across the globe who believe
-          {"Capoeira's"} future depends on how well we listen to each other.
+          The Capoeira International Community is a private, invite-only
+          professional community designed to unite the global community of
+          Capoeira students, instructors, school owners, and Mestres in a
+          collaborative effort to architect the future infrastructure of the
+          sport. We are building a high-signal R&amp;D engine where members
+          co-fund and co-design solutions to the operational, educational, and
+          professional challenges that have historically held the art form back
+          from achieving its full global potential.
         </p>
         <p>
-          We are not affiliated with any single lineage or style.{" "}
-          <strong>We belong to the whole of Capoeira</strong> — Angola,
-          Regional, and everything in between. Our work is to understand where
-          this community is, what it needs, and to create things that genuinely
-          serve it.
+          Unlike traditional online communities focused on content consumption,
+          the Capoeira International Community is structured as a founder&apos;s
+          collective — members are not subscribers receiving value, they are
+          co-creators producing it. We are not affiliated with any single group,
+          lineage or style.{" "}
+          <strong>We belong to and work for the whole of Capoeira</strong> —
+          Angola, Regional, and everything in between.
         </p>
 
         <div className="pillars">
@@ -93,14 +106,19 @@ export default function Home() {
             <em>you belong here.</em>
           </h2>
           <p className="lead">
-            This conversation is open to every person who has ever had Capoeira
-            in their life. Pick the path that fits you most.
+            This is a single-question survey designed to identify the most
+            pressing challenges our community faces today, from the individual
+            perspectives of those who directly experience them every day. It is
+            open to every person who practices Capoeira today or has ever
+            practiced it in the past and wants to contribute to finding the
+            solutions to the obstacles that have historically held us back.
           </p>
+          <p className="lead">To participate, pick the path that fits you most.</p>
 
           <div className="seg-list">
             <div className="seg-item">
               <span className="icon">🌱</span>
-              <span className="name">The Curious One</span>
+              <span className="name">The Newbie</span>
               <span className="desc">Exploring Capoeira for the first time</span>
             </div>
             <div className="seg-item">
@@ -110,12 +128,12 @@ export default function Home() {
             </div>
             <div className="seg-item">
               <span className="icon">🌀</span>
-              <span className="name">The Practitioner</span>
+              <span className="name">The Pro</span>
               <span className="desc">Years of training, deepening the art</span>
             </div>
             <div className="seg-item">
               <span className="icon">🪘</span>
-              <span className="name">The Teacher</span>
+              <span className="name">The Expert</span>
               <span className="desc">Instructors, mestres, and school leaders</span>
             </div>
             <div className="seg-item">
@@ -141,20 +159,18 @@ export default function Home() {
         <p>
           This is not a survey for the sake of data. Every response is read
           personally. The patterns we find will directly inform what Capoeira
-          International builds — the resources, the conversations, the events,
-          the community.
+          International builds.
         </p>
         <p>
           <strong>We ask one question.</strong> What is your single biggest
-          challenge or frustration right now? {"That's"} it. No long forms, no
+          challenge or frustration right now? That&apos;s it. No long forms, no
           trick questions.
         </p>
 
         <ul className="promise-list">
-          <li>Your answer is read by a human, not just processed by an algorithm</li>
           <li>We will never sell or share your information</li>
           <li>This takes under two minutes</li>
-          <li>Every voice — beginner to mestre — carries equal weight here</li>
+          <li>Every voice — beginner to mestre — carries equal weight</li>
         </ul>
       </section>
 
@@ -163,12 +179,12 @@ export default function Home() {
       {/* Final CTA */}
       <section className="final-cta">
         <h2>
-          Ready to share<br />
-          <em>your story?</em>
+          Ready to speak<br />
+          <em>your truth?</em>
         </h2>
-        <p>Two minutes. One question. Your voice in the future of Capoeira.</p>
+        <p>Two minutes. One question. Your contribution to the future of Capoeira.</p>
         <a href="/smiq" className="hero-cta">
-          Join the Conversation
+          Join the Effort
           <span className="arrow">→</span>
         </a>
       </section>
@@ -177,7 +193,7 @@ export default function Home() {
       <footer>
         <div className="footer-logo">Capoeira International</div>
         <div className="footer-note">
-          Listening to the community &nbsp;·&nbsp; Built with care
+          With you. For you. Forward.
         </div>
       </footer>
 
