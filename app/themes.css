@@ -439,6 +439,272 @@
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
+   THEME 12 — PARCHMENT & INK  (light)
+   Aged manuscript paper — warm cream with dark brown ink accents.
+   Spectral (literary display) + EB Garamond (body). 3 px sharp.
+   ════════════════════════════════════════════════════════════════════════════ */
+[data-theme="parchment-ink"] {
+  --bg:          #f0e8d0;
+  --surface:     #e6dcc4;
+  --border:      #c8b890;
+  --gold:        #3a2810;
+  --gold-light:  #5a4020;
+  --gold-muted:  #a89060;
+  --gold-dim:    rgba(58, 40, 16, 0.08);
+  --text:        #1a1008;
+  --text-muted:  #5a4430;
+  --text-dim:    #9a8060;
+  --font-display: 'Spectral', Georgia, serif;
+  --font-body:    'EB Garamond', Georgia, serif;
+  --radius:      3px;
+  --radius-pill: 16px;
+}
+
+[data-theme="parchment-ink"] nav {
+  background: linear-gradient(to bottom, rgba(240, 232, 208, 0.97) 0%, transparent 100%);
+}
+[data-theme="parchment-ink"] body::before { opacity: 0.18; }
+[data-theme="parchment-ink"] .glow-top {
+  background: radial-gradient(ellipse, rgba(58, 40, 16, 0.06) 0%, transparent 65%);
+}
+[data-theme="parchment-ink"] .glow-bottom {
+  background: radial-gradient(ellipse, rgba(58, 40, 16, 0.04) 0%, transparent 70%);
+}
+[data-theme="parchment-ink"] .hero-cta,
+[data-theme="parchment-ink"] .btn.btn-primary,
+[data-theme="parchment-ink"] .btn-primary { color: var(--bg); }
+[data-theme="parchment-ink"] .main-card,
+[data-theme="parchment-ink"] .card { box-shadow: 0 4px 40px rgba(58, 40, 16, 0.1); }
+[data-theme="parchment-ink"] .seg-item,
+[data-theme="parchment-ink"] .seg-card,
+[data-theme="parchment-ink"] .segment-card,
+[data-theme="parchment-ink"] .option-card,
+[data-theme="parchment-ink"] .choice-card { background: rgba(0, 0, 0, 0.02); }
+[data-theme="parchment-ink"] .smiq-textarea,
+[data-theme="parchment-ink"] .form-input,
+[data-theme="parchment-ink"] .card textarea,
+[data-theme="parchment-ink"] .card input[type="text"],
+[data-theme="parchment-ink"] .card input[type="email"] { background: rgba(0, 0, 0, 0.04); }
+[data-theme="parchment-ink"] .hero-cta:hover,
+[data-theme="parchment-ink"] .btn.btn-primary:hover:not(:disabled),
+[data-theme="parchment-ink"] .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 8px 28px rgba(58, 40, 16, 0.2);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   THEME 13 — SOL NASCENTE  (light)
+   Sunrise over Salvador da Bahia — saffron cream sky, deep crimson sun.
+   Josefin Slab (geometric slab) + Nunito (warm open). 5 px.
+   ════════════════════════════════════════════════════════════════════════════ */
+[data-theme="sol-nascente"] {
+  --bg:          #faf4e4;
+  --surface:     #f3e8c8;
+  --border:      #e0c890;
+  --gold:        #b83408;
+  --gold-light:  #d85020;
+  --gold-muted:  #d8a070;
+  --gold-dim:    rgba(184, 52, 8, 0.07);
+  --text:        #180c04;
+  --text-muted:  #5a3020;
+  --text-dim:    #9a7850;
+  --font-display: 'Josefin Slab', Georgia, serif;
+  --font-body:    'Nunito', system-ui, sans-serif;
+  --radius:      5px;
+  --radius-pill: 22px;
+}
+
+[data-theme="sol-nascente"] nav {
+  background: linear-gradient(to bottom, rgba(250, 244, 228, 0.97) 0%, transparent 100%);
+}
+[data-theme="sol-nascente"] body::before { opacity: 0.18; }
+[data-theme="sol-nascente"] .glow-top {
+  background: radial-gradient(ellipse, rgba(184, 52, 8, 0.08) 0%, transparent 65%);
+}
+[data-theme="sol-nascente"] .glow-bottom {
+  background: radial-gradient(ellipse, rgba(184, 52, 8, 0.05) 0%, transparent 70%);
+}
+[data-theme="sol-nascente"] .hero-cta,
+[data-theme="sol-nascente"] .btn.btn-primary,
+[data-theme="sol-nascente"] .btn-primary { color: var(--bg); }
+[data-theme="sol-nascente"] .main-card,
+[data-theme="sol-nascente"] .card { box-shadow: 0 4px 40px rgba(184, 52, 8, 0.08); }
+[data-theme="sol-nascente"] .seg-item,
+[data-theme="sol-nascente"] .seg-card,
+[data-theme="sol-nascente"] .segment-card,
+[data-theme="sol-nascente"] .option-card,
+[data-theme="sol-nascente"] .choice-card { background: rgba(0, 0, 0, 0.02); }
+[data-theme="sol-nascente"] .smiq-textarea,
+[data-theme="sol-nascente"] .form-input,
+[data-theme="sol-nascente"] .card textarea,
+[data-theme="sol-nascente"] .card input[type="text"],
+[data-theme="sol-nascente"] .card input[type="email"] { background: rgba(0, 0, 0, 0.04); }
+[data-theme="sol-nascente"] .hero-cta:hover,
+[data-theme="sol-nascente"] .btn.btn-primary:hover:not(:disabled),
+[data-theme="sol-nascente"] .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 8px 28px rgba(184, 52, 8, 0.25);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   THEME 14 — CALUNGA BLUE  (light)
+   Calunga = the mystical sea and portal to the ancestral realm in
+   Afro-Brazilian religion. Pale slate-blue sky, deep ocean accent.
+   Raleway throughout (display weight + body weight). 12 px smooth.
+   ════════════════════════════════════════════════════════════════════════════ */
+[data-theme="calunga-blue"] {
+  --bg:          #eaeff8;
+  --surface:     #dde5f2;
+  --border:      #b8c8e0;
+  --gold:        #1a4a8a;
+  --gold-light:  #2860aa;
+  --gold-muted:  #7898c0;
+  --gold-dim:    rgba(26, 74, 138, 0.07);
+  --text:        #0a1828;
+  --text-muted:  #3a5878;
+  --text-dim:    #8098b8;
+  --font-display: 'Raleway', system-ui, sans-serif;
+  --font-body:    'Raleway', system-ui, sans-serif;
+  --radius:      12px;
+  --radius-pill: 32px;
+}
+
+[data-theme="calunga-blue"] nav {
+  background: linear-gradient(to bottom, rgba(234, 239, 248, 0.97) 0%, transparent 100%);
+}
+[data-theme="calunga-blue"] body::before { opacity: 0.15; }
+[data-theme="calunga-blue"] .glow-top {
+  background: radial-gradient(ellipse, rgba(26, 74, 138, 0.08) 0%, transparent 65%);
+}
+[data-theme="calunga-blue"] .glow-bottom {
+  background: radial-gradient(ellipse, rgba(26, 74, 138, 0.05) 0%, transparent 70%);
+}
+[data-theme="calunga-blue"] .hero-cta,
+[data-theme="calunga-blue"] .btn.btn-primary,
+[data-theme="calunga-blue"] .btn-primary { color: var(--bg); }
+[data-theme="calunga-blue"] .main-card,
+[data-theme="calunga-blue"] .card { box-shadow: 0 4px 40px rgba(26, 74, 138, 0.1); }
+[data-theme="calunga-blue"] .seg-item,
+[data-theme="calunga-blue"] .seg-card,
+[data-theme="calunga-blue"] .segment-card,
+[data-theme="calunga-blue"] .option-card,
+[data-theme="calunga-blue"] .choice-card { background: rgba(0, 0, 0, 0.02); }
+[data-theme="calunga-blue"] .smiq-textarea,
+[data-theme="calunga-blue"] .form-input,
+[data-theme="calunga-blue"] .card textarea,
+[data-theme="calunga-blue"] .card input[type="text"],
+[data-theme="calunga-blue"] .card input[type="email"] { background: rgba(0, 0, 0, 0.03); }
+[data-theme="calunga-blue"] .hero-cta:hover,
+[data-theme="calunga-blue"] .btn.btn-primary:hover:not(:disabled),
+[data-theme="calunga-blue"] .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 8px 28px rgba(26, 74, 138, 0.25);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   THEME 15 — CERRADO GOLD  (light)
+   The cerrado savanna surrounding Bahia — sun-baked golden grasslands,
+   cracked clay, dry amber light. Cormorant Garamond + Lato. 2 px sharp.
+   ════════════════════════════════════════════════════════════════════════════ */
+[data-theme="cerrado-gold"] {
+  --bg:          #f2e8c0;
+  --surface:     #e8d8a8;
+  --border:      #c8a870;
+  --gold:        #5a3808;
+  --gold-light:  #7a5018;
+  --gold-muted:  #b89858;
+  --gold-dim:    rgba(90, 56, 8, 0.07);
+  --text:        #1a0e04;
+  --text-muted:  #5a3e18;
+  --text-dim:    #9a7840;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Lato', system-ui, sans-serif;
+  --radius:      2px;
+  --radius-pill: 14px;
+}
+
+[data-theme="cerrado-gold"] nav {
+  background: linear-gradient(to bottom, rgba(242, 232, 192, 0.97) 0%, transparent 100%);
+}
+[data-theme="cerrado-gold"] body::before { opacity: 0.18; }
+[data-theme="cerrado-gold"] .glow-top {
+  background: radial-gradient(ellipse, rgba(90, 56, 8, 0.07) 0%, transparent 65%);
+}
+[data-theme="cerrado-gold"] .glow-bottom {
+  background: radial-gradient(ellipse, rgba(90, 56, 8, 0.04) 0%, transparent 70%);
+}
+[data-theme="cerrado-gold"] .hero-cta,
+[data-theme="cerrado-gold"] .btn.btn-primary,
+[data-theme="cerrado-gold"] .btn-primary { color: var(--bg); }
+[data-theme="cerrado-gold"] .main-card,
+[data-theme="cerrado-gold"] .card { box-shadow: 0 4px 40px rgba(90, 56, 8, 0.1); }
+[data-theme="cerrado-gold"] .seg-item,
+[data-theme="cerrado-gold"] .seg-card,
+[data-theme="cerrado-gold"] .segment-card,
+[data-theme="cerrado-gold"] .option-card,
+[data-theme="cerrado-gold"] .choice-card { background: rgba(0, 0, 0, 0.02); }
+[data-theme="cerrado-gold"] .smiq-textarea,
+[data-theme="cerrado-gold"] .form-input,
+[data-theme="cerrado-gold"] .card textarea,
+[data-theme="cerrado-gold"] .card input[type="text"],
+[data-theme="cerrado-gold"] .card input[type="email"] { background: rgba(0, 0, 0, 0.04); }
+[data-theme="cerrado-gold"] .hero-cta:hover,
+[data-theme="cerrado-gold"] .btn.btn-primary:hover:not(:disabled),
+[data-theme="cerrado-gold"] .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 8px 28px rgba(90, 56, 8, 0.2);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   THEME 16 — GINGA VERDE  (light)
+   The ginga is capoeira's fundamental rocking movement — constant, alive,
+   never still. Warm sage-green with deep olive. Philosopher + Alegreya. 4 px.
+   ════════════════════════════════════════════════════════════════════════════ */
+[data-theme="ginga-verde"] {
+  --bg:          #e8ede0;
+  --surface:     #dde5d4;
+  --border:      #b8c8a8;
+  --gold:        #2a4e28;
+  --gold-light:  #3a6838;
+  --gold-muted:  #88a870;
+  --gold-dim:    rgba(42, 78, 40, 0.07);
+  --text:        #101a0c;
+  --text-muted:  #3a5030;
+  --text-dim:    #7a9068;
+  --font-display: 'Philosopher', Georgia, serif;
+  --font-body:    'Alegreya', Georgia, serif;
+  --radius:      4px;
+  --radius-pill: 20px;
+}
+
+[data-theme="ginga-verde"] nav {
+  background: linear-gradient(to bottom, rgba(232, 237, 224, 0.97) 0%, transparent 100%);
+}
+[data-theme="ginga-verde"] body::before { opacity: 0.18; }
+[data-theme="ginga-verde"] .glow-top {
+  background: radial-gradient(ellipse, rgba(42, 78, 40, 0.07) 0%, transparent 65%);
+}
+[data-theme="ginga-verde"] .glow-bottom {
+  background: radial-gradient(ellipse, rgba(42, 78, 40, 0.04) 0%, transparent 70%);
+}
+[data-theme="ginga-verde"] .hero-cta,
+[data-theme="ginga-verde"] .btn.btn-primary,
+[data-theme="ginga-verde"] .btn-primary { color: var(--bg); }
+[data-theme="ginga-verde"] .main-card,
+[data-theme="ginga-verde"] .card { box-shadow: 0 4px 40px rgba(42, 78, 40, 0.1); }
+[data-theme="ginga-verde"] .seg-item,
+[data-theme="ginga-verde"] .seg-card,
+[data-theme="ginga-verde"] .segment-card,
+[data-theme="ginga-verde"] .option-card,
+[data-theme="ginga-verde"] .choice-card { background: rgba(0, 0, 0, 0.02); }
+[data-theme="ginga-verde"] .smiq-textarea,
+[data-theme="ginga-verde"] .form-input,
+[data-theme="ginga-verde"] .card textarea,
+[data-theme="ginga-verde"] .card input[type="text"],
+[data-theme="ginga-verde"] .card input[type="email"] { background: rgba(0, 0, 0, 0.04); }
+[data-theme="ginga-verde"] .hero-cta:hover,
+[data-theme="ginga-verde"] .btn.btn-primary:hover:not(:disabled),
+[data-theme="ginga-verde"] .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 8px 28px rgba(42, 78, 40, 0.2);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
    THEME SWITCHER DROPDOWN UI
    ════════════════════════════════════════════════════════════════════════════ */
 

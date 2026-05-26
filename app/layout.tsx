@@ -43,7 +43,7 @@ export default function RootLayout({
         {/* Anti-FOUC: sets data-theme before first paint so CSS variables resolve correctly */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var ids=['midnight-ink','desert-sand','jade-forest','cobalt-storm','crimson-ritual','ivory-dusk','roda-circle','senzala-earth','maculele-fire','praia-bahia','berimbau-bronze'];var t=localStorage.getItem('capoeira-theme');document.documentElement.setAttribute('data-theme',(t&&ids.indexOf(t)>=0)?t:'midnight-ink');}catch(e){}})()`,
+            __html: `(function(){try{var ids=['midnight-ink','desert-sand','jade-forest','cobalt-storm','crimson-ritual','ivory-dusk','roda-circle','senzala-earth','maculele-fire','praia-bahia','berimbau-bronze','parchment-ink','sol-nascente','calunga-blue','cerrado-gold','ginga-verde'];var t=localStorage.getItem('capoeira-theme');document.documentElement.setAttribute('data-theme',(t&&ids.indexOf(t)>=0)?t:'midnight-ink');}catch(e){}})()`,
           }}
         />
         <Script src="/themes.js" strategy="afterInteractive" />

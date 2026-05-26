@@ -7,7 +7,7 @@ export default function Home() {
         <a href="#" className="nav-logo">
           Capoeira International
         </a>
-        <a href="/smiq" className="nav-cta">Join the Community</a>
+        <a href="/smiq" className="nav-cta">Join the Effort</a>
       </nav>
 
       {/* Hero */}

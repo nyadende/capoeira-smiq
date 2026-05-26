@@ -12,12 +12,18 @@
     { id: 'cobalt-storm',    label: 'Cobalt Storm'    },
     { id: 'crimson-ritual',  label: 'Crimson Ritual'  },
     { id: 'ivory-dusk',      label: 'Ivory Dusk'      },
-    /* ── Capoeira-specific ── */
+    /* ── Capoeira-specific dark ── */
     { id: 'roda-circle',     label: 'Roda Circle'     },
     { id: 'senzala-earth',   label: 'Senzala Earth'   },
     { id: 'maculele-fire',   label: 'Maculelê Fire'   },
     { id: 'praia-bahia',     label: 'Praia Bahia'     },
     { id: 'berimbau-bronze', label: 'Berimbau Bronze' },
+    /* ── Light ── */
+    { id: 'parchment-ink',   label: 'Parchment & Ink' },
+    { id: 'sol-nascente',    label: 'Sol Nascente'    },
+    { id: 'calunga-blue',    label: 'Calunga Blue'    },
+    { id: 'cerrado-gold',    label: 'Cerrado Gold'    },
+    { id: 'ginga-verde',     label: 'Ginga Verde'     },
   ];
 
   var VALID_IDS   = THEMES.map(function (t) { return t.id; });
