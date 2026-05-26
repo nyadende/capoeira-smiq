@@ -9,8 +9,13 @@ export const metadata: Metadata = {
 
 export default function SmiqPage() {
   return (
-    <main className="smiq-page">
-      <SmiqForm />
-    </main>
+    <>
+      <nav>
+        <a href="/" className="nav-logo">Capoeira International</a>
+      </nav>
+      <main className="smiq-page">
+        <SmiqForm />
+      </main>
+    </>
   );
 }

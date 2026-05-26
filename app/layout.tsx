@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Crimson_Pro, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+import "./themes.css";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -35,8 +37,16 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${playfair.variable} ${crimson.variable} ${jetbrains.variable}`}
+      suppressHydrationWarning
     >
       <body>
+        {/* Anti-FOUC: sets data-theme before first paint so CSS variables resolve correctly */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var ids=['midnight-ink','desert-sand','jade-forest','cobalt-storm','crimson-ritual','ivory-dusk','roda-circle','senzala-earth','maculele-fire','praia-bahia','berimbau-bronze'];var t=localStorage.getItem('capoeira-theme');document.documentElement.setAttribute('data-theme',(t&&ids.indexOf(t)>=0)?t:'midnight-ink');}catch(e){}})()`,
+          }}
+        />
+        <Script src="/themes.js" strategy="afterInteractive" />
         <div className="glow-top" />
         <div className="glow-bottom" />
         {children}
