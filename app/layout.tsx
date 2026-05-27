@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Crimson_Pro, JetBrains_Mono } from "next/font/google";
-import Script from "next/script";
+import { Spectral, EB_Garamond, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import "./themes.css";
 
-const playfair = Playfair_Display({
+const spectral = Spectral({
   subsets: ["latin"],
-  weight: ["700", "900"],
+  weight: ["600", "700", "800"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
 });
 
-const crimson = Crimson_Pro({
+const ebGaramond = EB_Garamond({
   subsets: ["latin"],
-  weight: ["300", "400", "600"],
+  weight: ["400", "700"],
   style: ["normal", "italic"],
   variable: "--font-crimson",
 });
@@ -36,17 +34,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${crimson.variable} ${jetbrains.variable}`}
-      suppressHydrationWarning
+      className={`${spectral.variable} ${ebGaramond.variable} ${jetbrains.variable}`}
     >
       <body>
-        {/* Anti-FOUC: sets data-theme before first paint so CSS variables resolve correctly */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var ids=['midnight-ink','desert-sand','jade-forest','cobalt-storm','crimson-ritual','ivory-dusk','roda-circle','senzala-earth','maculele-fire','praia-bahia','berimbau-bronze','parchment-ink','sol-nascente','calunga-blue','cerrado-gold','ginga-verde'];var t=localStorage.getItem('capoeira-theme');document.documentElement.setAttribute('data-theme',(t&&ids.indexOf(t)>=0)?t:'midnight-ink');}catch(e){}})()`,
-          }}
-        />
-        <Script src="/themes.js" strategy="afterInteractive" />
         <div className="glow-top" />
         <div className="glow-bottom" />
         {children}
