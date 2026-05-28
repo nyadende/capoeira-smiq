@@ -134,6 +134,165 @@ nav {
   border-color: var(--gold);
 }
 
+/* ── Nav right-side group (lang switcher + CTA) ── */
+.nav-end {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ════════════════════════════════════════
+   LANGUAGE SWITCHER
+   ════════════════════════════════════════ */
+
+.lang-switcher {
+  position: relative;
+}
+
+.lang-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding-block: 6px;
+  padding-inline: 11px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  white-space: nowrap;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.lang-trigger:hover,
+.lang-switcher--open .lang-trigger {
+  border-color: var(--gold-muted);
+  color: var(--text);
+}
+
+.lang-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.lang-label {
+  font-size: 13px;
+}
+
+.lang-chevron {
+  font-size: 9px;
+  line-height: 1;
+  color: var(--text-dim);
+  transition: transform 0.2s ease;
+}
+
+.lang-switcher--open .lang-chevron {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown {
+  position: absolute;
+  inset-block-start: calc(100% + 6px);
+  inset-inline-end: 0;
+  min-inline-size: 168px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  list-style: none;
+  padding-block: 4px;
+  padding-inline: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.lang-switcher--open .lang-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-block: 7px;
+  padding-inline: 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 0.15s, color 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  user-select: none;
+}
+
+.lang-option:hover {
+  background: var(--gold-dim);
+  color: var(--text);
+}
+
+.lang-option--active {
+  color: var(--gold);
+}
+
+.lang-option--active .lang-option-code {
+  font-weight: 700;
+}
+
+.lang-option-code {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  min-inline-size: 26px;
+  display: inline-block;
+}
+
+.lang-option-name {
+  color: inherit;
+  flex: 1;
+}
+
+/* "Add your language" — separator + muted italic */
+.lang-option--add {
+  cursor: default;
+  border-block-start: 1px solid var(--border);
+  margin-block-start: 4px;
+  padding-block-start: 10px;
+  color: var(--text-dim);
+  font-style: italic;
+  pointer-events: none;
+}
+
+.lang-option--add:hover {
+  background: none;
+  color: var(--text-dim);
+}
+
+.lang-add-icon {
+  font-size: 13px;
+  font-style: normal;
+  opacity: 0.5;
+  min-inline-size: 26px;
+  display: inline-block;
+  text-align: center;
+}
+
+/* On narrow screens collapse to flag only */
+@media (max-width: 600px) {
+  .lang-label { display: none; }
+  .lang-trigger { padding-inline: 9px; }
+}
+
 /* ── Hero ── */
 .hero {
   min-height: 100vh;

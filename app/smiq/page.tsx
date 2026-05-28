@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SmiqForm from "./SmiqForm";
+import LangSwitcher from "../components/LangSwitcher";
 
 export const metadata: Metadata = {
   title: "Share Your Voice — Capoeira International",
@@ -11,7 +12,8 @@ export default function SmiqPage() {
   return (
     <>
       <nav>
-        <a href="/" className="nav-logo">Capoeira International</a>
+        <a href="/" className="nav-logo" data-i18n="smiq_nav.logo">Capoeira International</a>
+        <LangSwitcher />
       </nav>
       <main className="smiq-page">
         <SmiqForm />

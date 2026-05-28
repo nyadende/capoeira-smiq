@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Spectral, EB_Garamond, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const spectral = Spectral({
@@ -37,6 +38,7 @@ export default function RootLayout({
       className={`${spectral.variable} ${ebGaramond.variable} ${jetbrains.variable}`}
     >
       <body>
+        <Script src="/i18n.js" strategy="afterInteractive" />
         <div className="glow-top" />
         <div className="glow-bottom" />
         {children}
