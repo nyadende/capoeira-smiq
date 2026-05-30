@@ -17,29 +17,31 @@ export default function Home() {
 
       {/* Hero */}
       <section className="hero">
-        <div className="hero-eyebrow" data-i18n="hero.eyebrow">Capoeira International</div>
-        <h1>
-          <span data-i18n="hero.h1_line1">Building</span><br />
-          <em data-i18n="hero.h1_line2">Our Future</em><br />
-          <span data-i18n="hero.h1_line3">Together</span>
-        </h1>
-        <p className="hero-sub" data-i18n="hero.body1">
-          We are a community of practitioners, teachers and students from across
-          the globe who believe that Capoeira is the most magnificent sport on
-          Earth, a powerful vehicle for profound transformation and an
-          incomparable force for good. Whether you are just starting your
-          Capoeira journey, leading others as they start theirs, or once belonged
-          but walked away, there is a place for you here.
-        </p>
-        <p className="hero-sub" data-i18n="hero.body2">
-          If you want to be a part of shaping the future of this art form, we
-          welcome you.
-        </p>
-        <a href="/smiq" className="hero-cta">
-          <span data-i18n="hero.cta">Join the Effort</span>
-          <span className="arrow">→</span>
-        </a>
-        <p className="hero-note" data-i18n="hero.note">Takes 2 minutes · No spam, ever</p>
+        <div className="hero-center">
+          <div className="hero-eyebrow" data-i18n="hero.eyebrow">Capoeira International</div>
+          <h1>
+            <span data-i18n="hero.h1_line1">Building</span><br />
+            <em data-i18n="hero.h1_line2">Our Future</em><br />
+            <span data-i18n="hero.h1_line3">Together</span>
+          </h1>
+          <p className="hero-sub" data-i18n="hero.body1">
+            We are a community of practitioners, teachers and students from across
+            the globe who believe that Capoeira is the most magnificent sport on
+            Earth, a powerful vehicle for profound transformation and an
+            incomparable force for good. Whether you are just starting your
+            Capoeira journey, leading others as they start theirs, or once belonged
+            but walked away, there is a place for you here.
+          </p>
+          <p className="hero-sub" data-i18n="hero.body2">
+            If you want to be a part of shaping the future of this art form, we
+            welcome you.
+          </p>
+          <a href="/smiq" className="hero-cta">
+            <span data-i18n="hero.cta">Join the Effort</span>
+            <span className="arrow">→</span>
+          </a>
+          <p className="hero-note" data-i18n="hero.note">Takes 2 minutes · No spam, ever</p>
+        </div>
         <div className="scroll-hint" data-i18n="hero.scroll">Scroll</div>
       </section>
 

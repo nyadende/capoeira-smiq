@@ -299,10 +299,18 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 120px 24px 48px;
+  position: relative;
+}
+
+.hero-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 120px 24px 80px;
-  position: relative;
+  width: 100%;
 }
 .hero-eyebrow {
   font-size: 12px;
@@ -382,10 +390,6 @@ nav {
 
 /* ── Scroll hint ── */
 .scroll-hint {
-  position: absolute;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -395,6 +399,8 @@ nav {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   animation: fadeIn 2s ease 1.5s both;
+  flex-shrink: 0;
+  padding-bottom: 12px;
 }
 .scroll-hint::after {
   content: '';
@@ -1319,7 +1325,7 @@ hr.rule {
   nav { padding: 16px 20px; }
   .nav-logo span { display: none; }
   .seg-list { grid-template-columns: 1fr 1fr; }
-  .hero { padding: 100px 20px 70px; }
+  .hero { padding: 100px 20px 32px; }
   footer { padding: 24px 20px; flex-direction: column; text-align: center; }
   .section { padding: 70px 20px; }
   .segments-section { padding: 60px 20px 80px; }
