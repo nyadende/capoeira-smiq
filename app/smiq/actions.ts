@@ -2,6 +2,7 @@
 
 import { getDb } from "@/lib/db";
 import { smiqResponses } from "@/db/schema";
+import { subscribeToKit } from "@/lib/kit";
 
 export type SubmitPayload = {
   segment: string;
@@ -40,8 +41,13 @@ export async function submitResponse(
       email: email.trim().toLowerCase(),
     });
 
+    subscribeToKit({ name: name.trim(), email: email.trim().toLowerCase(), segment, teachingRole, graduationLevel }).catch(
+      (err) => console.error("[kit]", err)
+    );
+
     return { ok: true };
-  } catch {
+  } catch (err) {
+    console.error("[submitResponse]", err);
     return { ok: false, error: "Something went wrong. Please try again." };
   }
 }

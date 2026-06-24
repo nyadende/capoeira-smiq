@@ -29,11 +29,37 @@ Branded as **Capoeira International**, run by **Malta Capoeira**.
 npm install
 ```
 
-Create `.env.local` with your Neon connection string:
+Create `.env.local` with:
 
 ```
 DATABASE_URL=postgres://...
+
+# Kit (ConvertKit) — server-side only
+KIT_API_KEY=your_kit_api_key
+
+# Segment tags
+KIT_TAG_ID_BEGINNER=
+KIT_TAG_ID_STUDENT=
+KIT_TAG_ID_PRACTITIONER=
+KIT_TAG_ID_TEACHER=
+KIT_TAG_ID_LAPSED=
+
+# Teacher role tags (applied when segment=teacher)
+KIT_TAG_ID_ROLE_CLASSES=
+KIT_TAG_ID_ROLE_OWN_SCHOOL=
+KIT_TAG_ID_ROLE_ADMIN=
+KIT_TAG_ID_ROLE_ONLINE=
+
+# Graduation level tags (applied when segment=teacher)
+KIT_TAG_ID_GRAD_MONITOR=
+KIT_TAG_ID_GRAD_PROFESSOR=
+KIT_TAG_ID_GRAD_CONTRA_MESTRE=
+KIT_TAG_ID_GRAD_MESTRE=
+KIT_TAG_ID_GRAD_GRAO_MESTRE=
+KIT_TAG_ID_GRAD_UNGRADED=
 ```
+
+Kit tag IDs can be found in the Kit dashboard under **Subscribers → Tags**. If `KIT_API_KEY` is not set, the integration is silently skipped — Kit failures never block form submission.
 
 ```bash
 npm run dev
