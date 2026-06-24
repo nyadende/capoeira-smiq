@@ -75,7 +75,7 @@ function t(key: string, fallback = "", vars?: Record<string, string>): string {
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-type Step = 0 | 1 | 2 | 3 | "success";
+type Step = 0 | 1 | 2 | 3 | "pending";
 
 type FormState = {
   step: Step;
@@ -176,28 +176,22 @@ export default function SmiqForm() {
     });
 
     if (result.ok) {
-      setStep("success");
+      setStep("pending");
     } else {
       setError(result.error);
     }
     setSubmitting(false);
   }
 
-  // ── Success screen ───────────────────────────────────────────────────────────
+  // ── Check inbox screen ───────────────────────────────────────────────────────
 
-  if (state.step === "success") {
-    const isLapsed = state.segment === "lapsed";
-    const firstName = state.name.split(" ")[0];
+  if (state.step === "pending") {
     return (
       <div className="card" id="main-card">
         <div id="success-screen">
-          <div className="axe-heading" id="success-heading">
-            {t("form_success.heading", `Axé, ${firstName}!`, { firstName })}
-          </div>
+          <div className="axe-heading" id="success-heading">Check your inbox</div>
           <p className="success-msg" id="success-msg">
-            {isLapsed
-              ? t("form_success.body_lapsed", "Thank you for sharing your story. Understanding why people step away matters deeply — your answer will be read carefully.")
-              : t("form_success.body_default", "Thank you for sharing. We read every response personally and your answer will help shape something genuinely useful for the Capoeira community.")}
+            We sent a confirmation link to <strong>{state.email}</strong>. Click it to submit your response — the link expires in 24 hours.
           </p>
           <div className="segment-badge" id="success-badge">
             <span>{rawSegment?.icon}</span>

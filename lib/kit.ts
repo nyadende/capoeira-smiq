@@ -1,13 +1,5 @@
 const KIT_API = "https://api.kit.com/v4";
 
-const SEGMENT_TAG_ENV: Record<string, string> = {
-  beginner:     "KIT_TAG_ID_BEGINNER",
-  student:      "KIT_TAG_ID_STUDENT",
-  practitioner: "KIT_TAG_ID_PRACTITIONER",
-  teacher:      "KIT_TAG_ID_TEACHER",
-  lapsed:       "KIT_TAG_ID_LAPSED",
-};
-
 const ROLE_TAG_ENV: Record<string, string> = {
   classes:      "KIT_TAG_ID_ROLE_CLASSES",
   "own-school": "KIT_TAG_ID_ROLE_OWN_SCHOOL",
@@ -51,7 +43,11 @@ export async function subscribeToKit({
   const subRes = await fetch(`${KIT_API}/subscribers`, {
     method: "POST",
     headers,
-    body: JSON.stringify({ email_address: email, first_name: name }),
+    body: JSON.stringify({
+      email_address: email,
+      first_name: name,
+      fields: { capoeira_segment: segment },
+    }),
   });
 
   if (!subRes.ok) {
@@ -59,7 +55,6 @@ export async function subscribeToKit({
   }
 
   const tagEnvKeys = [
-    SEGMENT_TAG_ENV[segment],
     teachingRole ? ROLE_TAG_ENV[teachingRole] : undefined,
     graduationLevel ? GRAD_TAG_ENV[graduationLevel] : undefined,
   ];
