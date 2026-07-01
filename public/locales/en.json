@@ -145,6 +145,19 @@
     "body_default": "Thank you for sharing. We read every response personally and your answer will help shape something genuinely useful for the Capoeira community.",
     "body_lapsed": "Thank you for sharing your story. Understanding why people step away matters deeply — your answer will be read carefully."
   },
+  "form_pending": {
+    "heading": "Check your inbox",
+    "body_before": "We sent a confirmation link to ",
+    "body_after": ". Click it to submit your response — the link expires in 24 hours."
+  },
+  "confirmed": {
+    "success_heading": "Axé!",
+    "success_body": "Thank you for sharing. We read every response personally and your answer will help shape something genuinely useful for the Capoeira community.",
+    "expired_heading": "Link expired",
+    "expired_before": "This confirmation link has expired or has already been used. Please ",
+    "expired_link": "fill in the form again",
+    "expired_after": " to receive a new one."
+  },
   "validation": {
     "required_fields": "Please fill in all required fields.",
     "invalid_email": "Please enter a valid email address.",

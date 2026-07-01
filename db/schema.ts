@@ -12,6 +12,7 @@ export const pendingSmiqSubmissions = pgTable("pending_smiq_submissions", {
   smiqAnswer:      text("smiq_answer").notNull(),
   teachingRole:    text("teaching_role"),
   graduationLevel: text("graduation_level"),
+  lang:            text("lang"),
 });
 
 export const smiqResponses = pgTable("smiq_responses", {
@@ -24,6 +25,7 @@ export const smiqResponses = pgTable("smiq_responses", {
   smiqAnswer:      text("smiq_answer"),
   teachingRole:    text("teaching_role"),
   graduationLevel: text("graduation_level"),
+  lang:            text("lang"),
 });
 
 export type SmiqResponse = typeof smiqResponses.$inferSelect;

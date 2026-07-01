@@ -173,6 +173,7 @@ export default function SmiqForm() {
       graduationLevel: isTeacher ? state.graduationLevel : null,
       name: state.name,
       email: state.email,
+      lang: window.i18n?.getCurrentLang() ?? "en",
     });
 
     if (result.ok) {
@@ -189,9 +190,11 @@ export default function SmiqForm() {
     return (
       <div className="card" id="main-card">
         <div id="success-screen">
-          <div className="axe-heading" id="success-heading">Check your inbox</div>
+          <div className="axe-heading" id="success-heading">{t("form_pending.heading", "Check your inbox")}</div>
           <p className="success-msg" id="success-msg">
-            We sent a confirmation link to <strong>{state.email}</strong>. Click it to submit your response — the link expires in 24 hours.
+            {t("form_pending.body_before", "We sent a confirmation link to ")}
+            <strong>{state.email}</strong>
+            {t("form_pending.body_after", ". Click it to submit your response — the link expires in 24 hours.")}
           </p>
           <div className="segment-badge" id="success-badge">
             <span>{rawSegment?.icon}</span>

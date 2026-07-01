@@ -6,6 +6,8 @@ import { smiqResponses, pendingSmiqSubmissions } from "@/db/schema";
 import { subscribeToKit } from "@/lib/kit";
 import { sendConfirmationEmail } from "@/lib/email";
 
+const SUPPORTED_LANGS = new Set(["en", "pt", "es", "fr"]);
+
 export type SubmitPayload = {
   segment: string;
   segmentLabel: string;
@@ -14,6 +16,7 @@ export type SubmitPayload = {
   graduationLevel: string | null;
   name: string;
   email: string;
+  lang: string;
 };
 
 export type SubmitResult =
@@ -23,7 +26,7 @@ export type SubmitResult =
 export async function submitResponse(
   payload: SubmitPayload
 ): Promise<SubmitResult> {
-  const { segment, segmentLabel, smiqAnswer, teachingRole, graduationLevel, name, email } =
+  const { segment, segmentLabel, smiqAnswer, teachingRole, graduationLevel, name, email, lang } =
     payload;
 
   if (!segment || !segmentLabel || !smiqAnswer.trim() || !name.trim() || !email.trim()) {
@@ -34,6 +37,7 @@ export async function submitResponse(
     return { ok: false, error: "Please enter a valid email address." };
   }
 
+  const cleanLang = SUPPORTED_LANGS.has(lang) ? lang : "en";
   const token = crypto.randomUUID();
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
   const cleanEmail = email.trim().toLowerCase();
@@ -56,6 +60,7 @@ export async function submitResponse(
       smiqAnswer: smiqAnswer.trim(),
       teachingRole: teachingRole ?? null,
       graduationLevel: graduationLevel ?? null,
+      lang: cleanLang,
     });
 
     await sendConfirmationEmail({ name: cleanName, email: cleanEmail, token });
@@ -95,6 +100,7 @@ export async function confirmResponse(token: string): Promise<{ ok: boolean }> {
       graduationLevel: row.graduationLevel,
       name: row.name,
       email: row.email,
+      lang: row.lang,
     });
 
     await db.delete(pendingSmiqSubmissions).where(
@@ -107,6 +113,7 @@ export async function confirmResponse(token: string): Promise<{ ok: boolean }> {
       segment: row.segment,
       teachingRole: row.teachingRole,
       graduationLevel: row.graduationLevel,
+      lang: row.lang,
     }).catch((err) => console.error("[kit]", err));
 
     return { ok: true };

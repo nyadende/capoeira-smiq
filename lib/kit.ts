@@ -16,18 +16,27 @@ const GRAD_TAG_ENV: Record<string, string> = {
   ungraded:        "KIT_TAG_ID_GRAD_UNGRADED",
 };
 
+const LANG_TAG_ENV: Record<string, string> = {
+  en: "KIT_TAG_ID_LANG_EN",
+  pt: "KIT_TAG_ID_LANG_PT",
+  es: "KIT_TAG_ID_LANG_ES",
+  fr: "KIT_TAG_ID_LANG_FR",
+};
+
 export async function subscribeToKit({
   name,
   email,
   segment,
   teachingRole,
   graduationLevel,
+  lang,
 }: {
   name: string;
   email: string;
   segment: string;
   teachingRole: string | null;
   graduationLevel: string | null;
+  lang: string | null;
 }): Promise<void> {
   const apiKey = process.env.KIT_API_KEY;
   if (!apiKey) {
@@ -57,6 +66,7 @@ export async function subscribeToKit({
   const tagEnvKeys = [
     teachingRole ? ROLE_TAG_ENV[teachingRole] : undefined,
     graduationLevel ? GRAD_TAG_ENV[graduationLevel] : undefined,
+    lang ? LANG_TAG_ENV[lang] : undefined,
   ];
 
   const tagIds = tagEnvKeys
