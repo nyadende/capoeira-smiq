@@ -90,7 +90,7 @@ type FormState = {
 // ── Step dots ─────────────────────────────────────────────────────────────────
 
 function StepDots({ step, isTeacher }: { step: Step; isTeacher: boolean }) {
-  const currentIndex = step === "success" ? 4 : (step as number);
+  const currentIndex = step as number;
 
   function dotClass(i: number) {
     if (i === currentIndex) return "dot dot-active";
