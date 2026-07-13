@@ -18,6 +18,7 @@ Branded as **Capoeira International**, run by **Malta Capoeira**.
 | Styling | Tailwind CSS v4 (tokens in `app/globals.css`) |
 | Database | Neon Postgres via Vercel marketplace |
 | ORM | Drizzle ORM (`drizzle-orm/neon-http`) |
+| Email | Resend (response confirmation emails; dashboard magic-link auth pending — see Milestones) |
 | Fonts | Playfair Display, Crimson Pro (via `next/font/google`) |
 | Deploy | Vercel |
 
@@ -26,6 +27,8 @@ Branded as **Capoeira International**, run by **Malta Capoeira**.
 ## Local development
 
 ```bash
+git clone https://github.com/maltascapoeira/smiq.git
+cd smiq
 npm install
 ```
 
@@ -57,6 +60,11 @@ KIT_TAG_ID_GRAD_CONTRA_MESTRE=
 KIT_TAG_ID_GRAD_MESTRE=
 KIT_TAG_ID_GRAD_GRAO_MESTRE=
 KIT_TAG_ID_GRAD_UNGRADED=
+
+# Resend — confirmation emails
+RESEND_API_KEY=your_resend_api_key
+RESEND_FROM_EMAIL=onboarding@resend.dev
+NEXT_PUBLIC_APP_URL=http://localhost:3001
 ```
 
 Kit tag IDs can be found in the Kit dashboard under **Subscribers → Tags**. If `KIT_API_KEY` is not set, the integration is silently skipped — Kit failures never block form submission.
@@ -65,7 +73,33 @@ Kit tag IDs can be found in the Kit dashboard under **Subscribers → Tags**. If
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3001](http://localhost:3001).
+
+---
+
+## Deploy to Vercel
+
+> **Production deploy is blocked until M3 (dashboard + auth) lands.** The dashboard route must be auth-gated before it can go live — see Milestones and CLAUDE.md rule #2. Preview deploys are fine in the meantime.
+
+1. **Link the project** (one-time):
+   ```bash
+   vercel link
+   ```
+2. **Add the Neon integration** via the Vercel marketplace (Storage → Neon) if not already connected. This gives each preview deploy its own database branch, cut from production.
+3. **Sync env vars to Vercel**:
+   ```bash
+   bash scripts/sync-env-to-vercel.sh
+   ```
+   Pushes `.env.local` → the `preview` environment and `.env.production.local` → `production`. Requires the `vercel` CLI logged in and `vercel link` already run. Vercel system variables (`VERCEL_*`, `NEXT_RUNTIME*`) are skipped automatically.
+4. **Push the schema to the production database** (only when the schema has changed):
+   ```bash
+   npm run db:push:prod
+   ```
+5. **Deploy**:
+   ```bash
+   vercel          # preview deploy
+   vercel --prod   # production deploy — only after M3 auth is in place
+   ```
 
 ---
 

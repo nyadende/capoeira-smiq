@@ -8,11 +8,6 @@ import { sendConfirmationEmail } from "@/lib/email";
 
 const SUPPORTED_LANGS = new Set(["en", "pt", "es", "fr"]);
 
-// TEMP: log db host to identify which Neon branch preview is using — remove after diagnosis
-const dbUrl = process.env.DATABASE_URL ?? "";
-const dbHost = dbUrl.replace(/^[^@]+@/, "").replace(/\/.*$/, "");
-console.log("[db-host]", dbHost || "(DATABASE_URL not set)");
-
 export type SubmitPayload = {
   segment: string;
   segmentLabel: string;
