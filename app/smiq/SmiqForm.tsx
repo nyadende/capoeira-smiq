@@ -162,6 +162,15 @@ export default function SmiqForm() {
 
   async function handleSubmit() {
     if (!state.segment || !rawSegment) return;
+
+    const trimmedName = state.name.trim();
+    const trimmedEmail = state.email.trim();
+
+    if (!trimmedName || !trimmedEmail) {
+      setError("Please enter your name and email address.");
+      return;
+    }
+
     setSubmitting(true);
     setError(null);
 
@@ -171,8 +180,8 @@ export default function SmiqForm() {
       smiqAnswer: state.smiqAnswer,
       teachingRole: isTeacher ? state.teachingRole : null,
       graduationLevel: isTeacher ? state.graduationLevel : null,
-      name: state.name,
-      email: state.email,
+      name: trimmedName,
+      email: trimmedEmail,
     });
 
     if (result.ok) {

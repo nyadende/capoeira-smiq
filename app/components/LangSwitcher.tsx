@@ -40,14 +40,12 @@ function readStoredLang(): LangCode {
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export default function LangSwitcher() {
-  const [current, setCurrent] = useState<LangCode>("en");
+  const [current, setCurrent] = useState<LangCode>(() => readStoredLang());
   const [open, setOpen]       = useState(false);
   const wrapRef               = useRef<HTMLDivElement>(null);
 
-  // Sync from localStorage on mount, then track engine changes
+  // Track engine changes after mount
   useEffect(() => {
-    setCurrent(readStoredLang());
-
     function onEngineChange(e: Event) {
       const code = (e as CustomEvent<{ code: string }>).detail?.code as LangCode;
       if (code && LANG_MAP.has(code)) setCurrent(code);

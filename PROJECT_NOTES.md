@@ -7,7 +7,7 @@
 
 - **Live URL:** https://maltascapoeira.github.io/smiq/
 - **Repo:** github.com/maltascapoeira/smiq (inferred from GH Pages URL)
-- **Owner:** Paul (paulsmith@me.com), Malta Capoeira
+- **Owner:** Nya, Malta Capoeira
 - **Brand:** "Capoeira International" — addresses the global Capoeira community,
   run from Malta
 - **Status:** Site is live, but Supabase project is paused due to non-usage.
@@ -78,3 +78,45 @@ The existing build is well-thought-through. v2 should preserve:
 - Paul wants strategy and re-architecture suggestions, not just code execution
 - The codebase lives in a Git repo (not the local workspace folder), so file-level
   edits will need either repo access or working from copied snippets
+
+## Agentic engineering implementation plan
+
+This project should adopt agentic engineering principles selectively: enough to
+improve reliability, maintainability, and safety, without introducing unnecessary
+complexity.
+
+### Phase 1 — Stabilize the foundation
+
+- Lock the core product requirements, user journeys, and content boundaries.
+- Define the canonical data model for survey responses, segment routing, and
+  dashboard outputs.
+- Keep AI calls server-side only and enforce clear input/output schemas.
+- Add basic validation, structured logging, and error handling around the form
+  flow and AI integration.
+
+### Phase 2 — Introduce process discipline
+
+- Version prompts and track changes explicitly.
+- Separate prompt templates from orchestration logic so changes are easier to
+  review and test.
+- Create a lightweight review checklist for prompt, schema, and workflow changes.
+- Capture decisions in this file and in the repo docs so the system remains
+  understandable over time.
+
+### Phase 3 — Improve reliability and quality
+
+- Add retries, fallbacks, and timeout handling for AI calls.
+- Create a small evaluation set of expected outputs for the main survey and
+  analysis flows.
+- Log failures and quality issues so the system can be tuned based on real use.
+- Introduce feature flags where AI behavior is still evolving.
+
+### Phase 4 — Governance and iteration
+
+- Define ownership for prompts, data schemas, and deployment decisions.
+- Establish a simple release process for changes that affect user-facing copy or
+  AI behavior.
+- Review whether the project needs more formal testing, observability, or human
+  review before scaling.
+- Keep the implementation pragmatic: optimize for clarity, reproducibility, and
+  trust rather than over-engineering.

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import SmiqForm from "./SmiqForm";
 import LangSwitcher from "../components/LangSwitcher";
@@ -12,7 +13,9 @@ export default function SmiqPage() {
   return (
     <>
       <nav>
-        <a href="/" className="nav-logo" data-i18n="smiq_nav.logo">Capoeira International</a>
+        <Link href="/" className="nav-logo" data-i18n="smiq_nav.logo">
+          Capoeira International
+        </Link>
         <LangSwitcher />
       </nav>
       <main className="smiq-page">
