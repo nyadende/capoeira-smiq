@@ -27,11 +27,28 @@
 | Concern    | Choice                                                       |
 |------------|--------------------------------------------------------------|
 | Framework  | **Next.js** (App Router)                                     |
-| Hosting    | **Vercel**                                                   |
+| Hosting    | **Cloudflare Workers** (via OpenNext, decided 2026-07-21)    |
 | Database   | **Neon Postgres** (decided)                                  |
 | Auth       | Real email/password or magic-link login on the dashboard     |
 | AI calls   | Server-side only, API key in env var                         |
 | Email      | TBD — Resend is the obvious pick for Vercel + magic links    |
+
+### Why Cloudflare Workers (decided 2026-07-21)
+
+- Long-term hosting platform, moving off Vercel
+- Deployed via `@opennextjs/cloudflare` (OpenNext's Cloudflare adapter) — Cloudflare
+  doesn't yet have a "verified" first-party Next.js adapter, so this is their
+  recommended integration path as of this build
+- Good fit here: no `next/image`, no filesystem access, no edge-runtime-only code,
+  and `@neondatabase/serverless` already talks to Neon over HTTP, so it works
+  unmodified inside the Workers runtime
+- R2-backed ISR/tag caching was intentionally skipped for now (no ISR/revalidation
+  in this app yet) — see `open-next.config.ts` if that's needed later
+- Deployed first to the free `*.workers.dev` subdomain; custom domain is still an
+  open question (see below), to be wired up via Cloudflare once decided
+- Neon's DB connection is independent of the hosting platform (plain connection
+  string), so this move doesn't affect the database setup — only the one-click
+  Vercel marketplace convenience is lost, no functional change
 
 ### Why Neon (decided 2026-04-28)
 

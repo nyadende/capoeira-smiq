@@ -9,8 +9,9 @@ Branded "Capoeira International," run by Malta Capoeira.
 
 ## Stack (v2 rebuild in progress)
 
-- **Next.js** (App Router) on **Vercel**
-- **Neon Postgres** (via Vercel marketplace integration)
+- **Next.js** (App Router) on **Cloudflare Workers** (via `@opennextjs/cloudflare`,
+  moved from Vercel 2026-07-21 — see `PROJECT_NOTES.md`)
+- **Neon Postgres** (plain connection string; was via Vercel marketplace, now direct)
 - **Resend** for magic-link auth on the dashboard (likely)
 - All Anthropic API calls server-side, key in env vars only
 
