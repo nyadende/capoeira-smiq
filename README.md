@@ -5,7 +5,7 @@ A community research tool for the global Capoeira community. Segments visitors b
 Branded as **Capoeira International**, run by **Malta Capoeira**.
 
 - **v1 (live):** https://maltascapoeira.github.io/smiq/
-- **v2 (this repo):** Next.js rebuild, deployed on Vercel
+- **v2 (this repo):** https://smiq.capoeirainternational.workers.dev
 
 ---
 
@@ -16,10 +16,10 @@ Branded as **Capoeira International**, run by **Malta Capoeira**.
 | Framework | Next.js 16 (App Router, Turbopack) |
 | Language | TypeScript |
 | Styling | Tailwind CSS v4 (tokens in `app/globals.css`) |
-| Database | Neon Postgres via Vercel marketplace |
+| Database | Neon Postgres (direct connection string) |
 | ORM | Drizzle ORM (`drizzle-orm/neon-http`) |
 | Fonts | Playfair Display, Crimson Pro (via `next/font/google`) |
-| Deploy | Vercel |
+| Deploy | Cloudflare Workers, via `@opennextjs/cloudflare` |
 
 ---
 
@@ -29,17 +29,41 @@ Branded as **Capoeira International**, run by **Malta Capoeira**.
 npm install
 ```
 
-Create `.env.local` with your Neon connection string:
+Create `.env.local` with the required variables:
 
 ```
 DATABASE_URL=postgres://...
+RESEND_API_KEY=...
+RESEND_FROM_EMAIL=...
+NEXT_PUBLIC_APP_URL=http://localhost:3001
+KIT_API_KEY=...
+KIT_TAG_ID_ROLE_...             # Kit (ConvertKit) tag IDs — role, graduation, language
 ```
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3001](http://localhost:3001).
+
+---
+
+## Deploy
+
+Deployed to Cloudflare Workers via [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare). Config lives in `wrangler.jsonc` and `open-next.config.ts`.
+
+```bash
+npm run preview   # build + run locally in the Workers runtime
+npm run deploy    # build + deploy to Cloudflare
+```
+
+Secrets (same keys as `.env.local`, excluding `NEXT_PUBLIC_APP_URL`) are set on the Worker with:
+
+```bash
+npx wrangler secret bulk .env.local
+```
+
+Live at https://smiq.capoeirainternational.workers.dev.
 
 ---
 
