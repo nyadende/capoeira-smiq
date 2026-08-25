@@ -6,9 +6,18 @@ import { useSearchParams } from "next/navigation";
 export default function ConfirmedContent() {
   const params = useSearchParams();
   const expired = params.get("expired") === "1";
+  // This route is statically prerendered, and useSearchParams forces this
+  // subtree to render client-side rather than hydrate from the static shell.
+  // window.i18n exists synchronously (see public/i18n.js) but its translations
+  // load asynchronously, so the first client render can't safely call
+  // window.i18n.t() yet — it must match the fallback-only render below until
+  // mounted, or React throws a hydration mismatch.
+  const [mounted, setMounted] = useState(false);
   const [, setTick] = useState(0);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- required to avoid the hydration mismatch described above
+    setMounted(true);
     function onLangChange() {
       setTick((n) => n + 1);
     }
@@ -17,7 +26,7 @@ export default function ConfirmedContent() {
   }, []);
 
   function t(key: string, fallback: string): string {
-    if (typeof window === "undefined") return fallback;
+    if (!mounted) return fallback;
     return window.i18n?.t(key) || fallback;
   }
 
