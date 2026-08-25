@@ -10,6 +10,7 @@ export const smiqResponses = pgTable("smiq_responses", {
   smiqAnswer:      text("smiq_answer"),
   teachingRole:    text("teaching_role"),
   graduationLevel: text("graduation_level"),
+  lang:            text("lang"),
 });
 
 export type SmiqResponse = typeof smiqResponses.$inferSelect;
