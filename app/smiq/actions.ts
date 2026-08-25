@@ -1,8 +1,10 @@
 "use server";
 
 import { and, eq, gt, lt } from "drizzle-orm";
+import { after } from "next/server";
 import { getDb } from "@/lib/db";
 import { smiqResponses, pendingSmiqSubmissions } from "@/db/schema";
+import { subscribeToKit } from "@/lib/kit";
 import { sendConfirmationEmail } from "@/lib/email";
 
 export type SubmitPayload = {
@@ -176,6 +178,17 @@ export async function confirmResponse(token: string): Promise<{ ok: boolean }> {
       email: row.email,
       lang: row.lang,
     });
+
+    after(() =>
+      subscribeToKit({
+        name: row.name,
+        email: row.email,
+        segment: row.segment,
+        teachingRole: row.teachingRole,
+        graduationLevel: row.graduationLevel,
+        lang: row.lang,
+      }).catch((err) => console.error("[kit]", err))
+    );
 
     return { ok: true };
   } catch (error) {
