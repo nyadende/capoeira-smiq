@@ -75,7 +75,7 @@ function t(key: string, fallback = "", vars?: Record<string, string>): string {
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-type Step = 0 | 1 | 2 | 3 | "success";
+type Step = 0 | 1 | 2 | 3 | "pending";
 
 type FormState = {
   step: Step;
@@ -85,12 +85,13 @@ type FormState = {
   graduationLevel: string | null;
   name: string;
   email: string;
+  pendingEmail: string;
 };
 
 // ── Step dots ─────────────────────────────────────────────────────────────────
 
 function StepDots({ step, isTeacher }: { step: Step; isTeacher: boolean }) {
-  const currentIndex = step === "success" ? 4 : (step as number);
+  const currentIndex = typeof step === "number" ? step : 0;
 
   function dotClass(i: number) {
     if (i === currentIndex) return "dot dot-active";
@@ -124,6 +125,7 @@ export default function SmiqForm() {
     graduationLevel: null,
     name: "",
     email: "",
+    pendingEmail: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -182,31 +184,31 @@ export default function SmiqForm() {
       graduationLevel: isTeacher ? state.graduationLevel : null,
       name: trimmedName,
       email: trimmedEmail,
+      lang: window.i18n?.getCurrentLang() ?? "en",
     });
 
     if (result.ok) {
-      setStep("success");
+      setState((prev) => ({ ...prev, pendingEmail: result.pendingEmail }));
+      setStep("pending");
     } else {
       setError(result.error);
     }
     setSubmitting(false);
   }
 
-  // ── Success screen ───────────────────────────────────────────────────────────
+  // ── Check inbox screen ─────────────────────────────────────────────────────
 
-  if (state.step === "success") {
-    const isLapsed = state.segment === "lapsed";
-    const firstName = state.name.split(" ")[0];
+  if (state.step === "pending") {
     return (
       <div className="card" id="main-card">
         <div id="success-screen">
           <div className="axe-heading" id="success-heading">
-            {t("form_success.heading", `Axé, ${firstName}!`, { firstName })}
+            {t("form_pending.heading", "Check your inbox")}
           </div>
           <p className="success-msg" id="success-msg">
-            {isLapsed
-              ? t("form_success.body_lapsed", "Thank you for sharing your story. Understanding why people step away matters deeply — your answer will be read carefully.")
-              : t("form_success.body_default", "Thank you for sharing. We read every response personally and your answer will help shape something genuinely useful for the Capoeira community.")}
+            {t("form_pending.body_before", "We sent a confirmation link to ")}
+            <strong>{state.pendingEmail}</strong>
+            {t("form_pending.body_after", ". Click it to submit your response — the link expires in 24 hours.")}
           </p>
           <div className="segment-badge" id="success-badge">
             <span>{rawSegment?.icon}</span>

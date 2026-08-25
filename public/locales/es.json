@@ -206,6 +206,19 @@
     "body_lapsed": "Gracias por compartir tu historia. Entender por qué las personas se alejan importa profundamente — tu respuesta será leída con cuidado.",
     "body_lapsed_review": true
   },
+  "form_pending": {
+    "heading": "Revisa tu bandeja de entrada",
+    "body_before": "Te enviamos un enlace de confirmación a ",
+    "body_after": ". Haz clic en él para enviar tu respuesta — el enlace caduca en 24 horas."
+  },
+  "confirmed": {
+    "success_heading": "Axé!",
+    "success_body": "Gracias por compartir. Leemos cada respuesta personalmente y la tuya ayudará a dar forma a algo genuinamente útil para la comunidad de Capoeira.",
+    "expired_heading": "Enlace expirado",
+    "expired_before": "Este enlace de confirmación ha expirado o ya ha sido utilizado. Por favor, ",
+    "expired_link": "rellena el formulario de nuevo",
+    "expired_after": " para recibir uno nuevo."
+  },
   "validation": {
     "required_fields": "Por favor, completa todos los campos obligatorios.",
     "invalid_email": "Por favor, ingresa una dirección de correo electrónico válida.",

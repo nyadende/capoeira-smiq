@@ -1,7 +1,9 @@
 "use server";
 
+import { and, eq, gt, lt } from "drizzle-orm";
 import { getDb } from "@/lib/db";
-import { smiqResponses } from "@/db/schema";
+import { smiqResponses, pendingSmiqSubmissions } from "@/db/schema";
+import { sendConfirmationEmail } from "@/lib/email";
 
 export type SubmitPayload = {
   segment: string;
@@ -11,9 +13,12 @@ export type SubmitPayload = {
   graduationLevel: string | null;
   name: string;
   email: string;
+  lang: string;
 };
 
-export type SubmitResult = { ok: true } | { ok: false; error: string };
+export type SubmitResult =
+  | { ok: true; pendingEmail: string }
+  | { ok: false; error: string };
 
 type NormalizedSubmitPayload = {
   segment: string;
@@ -23,11 +28,13 @@ type NormalizedSubmitPayload = {
   graduationLevel: string | null;
   name: string;
   email: string;
+  lang: string;
 };
 
 const VALID_SEGMENTS = new Set(["curious", "student", "practitioner", "teacher", "lapsed"]);
 const VALID_TEACHING_ROLES = new Set(["classes", "own-school", "admin", "online"]);
 const VALID_GRADUATION_LEVELS = new Set(["monitor", "professor", "contra-mestre", "mestre", "grao-mestre", "ungraded"]);
+const SUPPORTED_LANGS = new Set(["en", "pt", "es", "fr"]);
 
 function normalizeText(value: string | null | undefined): string {
   return value?.trim() ?? "";
@@ -41,6 +48,7 @@ function validatePayload(payload: SubmitPayload): { ok: true; payload: Normalize
   const graduationLevel = normalizeText(payload.graduationLevel);
   const name = normalizeText(payload.name);
   const email = normalizeText(payload.email).toLowerCase();
+  const lang = SUPPORTED_LANGS.has(payload.lang) ? payload.lang : "en";
 
   if (!segment || !segmentLabel || !smiqAnswer || !name || !email) {
     return { ok: false, error: "Please fill in all required fields." };
@@ -73,6 +81,7 @@ function validatePayload(payload: SubmitPayload): { ok: true; payload: Normalize
         graduationLevel,
         name,
         email,
+        lang,
       },
     };
   }
@@ -87,6 +96,7 @@ function validatePayload(payload: SubmitPayload): { ok: true; payload: Normalize
       graduationLevel: null,
       name,
       email,
+      lang,
     },
   };
 }
@@ -99,15 +109,26 @@ export async function submitResponse(
     return validated;
   }
 
-  const { segment, segmentLabel, smiqAnswer, teachingRole, graduationLevel, name, email } =
+  const { segment, segmentLabel, smiqAnswer, teachingRole, graduationLevel, name, email, lang } =
     validated.payload;
 
   if (!process.env.DATABASE_URL) {
     return { ok: false, error: "Submission is temporarily unavailable. Please try again later." };
   }
 
+  const token = crypto.randomUUID();
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
   try {
-    await getDb().insert(smiqResponses).values({
+    const db = getDb();
+
+    await db.delete(pendingSmiqSubmissions).where(
+      lt(pendingSmiqSubmissions.expiresAt, new Date())
+    );
+
+    await db.insert(pendingSmiqSubmissions).values({
+      token,
+      expiresAt,
       segment,
       segmentLabel,
       smiqAnswer,
@@ -115,11 +136,53 @@ export async function submitResponse(
       graduationLevel,
       name,
       email,
+      lang,
+    });
+
+    await sendConfirmationEmail({ name, email, token });
+
+    return { ok: true, pendingEmail: email };
+  } catch (error) {
+    console.error("Failed to create pending SMIQ submission", error);
+    return { ok: false, error: "Something went wrong. Please try again." };
+  }
+}
+
+export async function confirmResponse(token: string): Promise<{ ok: boolean }> {
+  if (!token) return { ok: false };
+
+  const db = getDb();
+
+  const [row] = await db
+    .delete(pendingSmiqSubmissions)
+    .where(
+      and(
+        eq(pendingSmiqSubmissions.token, token),
+        gt(pendingSmiqSubmissions.expiresAt, new Date())
+      )
+    )
+    .returning();
+
+  if (!row) return { ok: false };
+
+  try {
+    await db.insert(smiqResponses).values({
+      segment: row.segment,
+      segmentLabel: row.segmentLabel,
+      smiqAnswer: row.smiqAnswer,
+      teachingRole: row.teachingRole,
+      graduationLevel: row.graduationLevel,
+      name: row.name,
+      email: row.email,
+      lang: row.lang,
     });
 
     return { ok: true };
   } catch (error) {
-    console.error("Failed to save SMIQ response", error);
-    return { ok: false, error: "Something went wrong. Please try again." };
+    // The pending row is already deleted at this point (consumed by the token),
+    // so log its full contents on insert failure — otherwise a failed insert
+    // here loses the submission with no way to recover it.
+    console.error("Failed to confirm SMIQ submission", error, row);
+    return { ok: false };
   }
 }
