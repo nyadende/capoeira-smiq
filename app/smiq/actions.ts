@@ -2,10 +2,12 @@
 
 import { and, eq, gt, lt } from "drizzle-orm";
 import { after } from "next/server";
+import { headers } from "next/headers";
 import { getDb } from "@/lib/db";
 import { smiqResponses, pendingSmiqSubmissions } from "@/db/schema";
 import { subscribeToKit } from "@/lib/kit";
 import { sendConfirmationEmail } from "@/lib/email";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 
 export type SubmitPayload = {
   segment: string;
@@ -16,6 +18,7 @@ export type SubmitPayload = {
   name: string;
   email: string;
   lang: string;
+  turnstileToken: string;
 };
 
 export type SubmitResult =
@@ -116,6 +119,12 @@ export async function submitResponse(
 
   if (!process.env.DATABASE_URL) {
     return { ok: false, error: "Submission is temporarily unavailable. Please try again later." };
+  }
+
+  const remoteip = (await headers()).get("cf-connecting-ip") ?? undefined;
+  const verified = await verifyTurnstileToken(payload.turnstileToken, remoteip);
+  if (!verified) {
+    return { ok: false, error: "Verification failed. Please try again." };
   }
 
   const token = crypto.randomUUID();

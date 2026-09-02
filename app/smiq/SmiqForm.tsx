@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { submitResponse } from "./actions";
+import TurnstileWidget, { type TurnstileWidgetHandle } from "./TurnstileWidget";
 
 // ── Segment data — keys/icons/English fallbacks ───────────────────────────────
 
@@ -86,6 +87,7 @@ type FormState = {
   name: string;
   email: string;
   pendingEmail: string;
+  turnstileToken: string | null;
 };
 
 // ── Step dots ─────────────────────────────────────────────────────────────────
@@ -126,10 +128,16 @@ export default function SmiqForm() {
     name: "",
     email: "",
     pendingEmail: "",
+    turnstileToken: null,
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [, setTick] = useState(0);
+  const turnstileRef = useRef<TurnstileWidgetHandle>(null);
+
+  const handleTurnstileToken = useCallback((token: string | null) => {
+    setState((prev) => ({ ...prev, turnstileToken: token }));
+  }, []);
 
   useEffect(() => {
     function onLangChange() {
@@ -185,6 +193,7 @@ export default function SmiqForm() {
       name: trimmedName,
       email: trimmedEmail,
       lang: window.i18n?.getCurrentLang() ?? "en",
+      turnstileToken: state.turnstileToken ?? "",
     });
 
     if (result.ok) {
@@ -192,6 +201,10 @@ export default function SmiqForm() {
       setStep("pending");
     } else {
       setError(result.error);
+      // The token is either already consumed by the failed verify call or
+      // now stale — reset so the user can get a fresh one without reloading.
+      turnstileRef.current?.reset();
+      setState((prev) => ({ ...prev, turnstileToken: null }));
     }
     setSubmitting(false);
   }
@@ -402,6 +415,8 @@ export default function SmiqForm() {
             />
           </div>
 
+          <TurnstileWidget ref={turnstileRef} onToken={handleTurnstileToken} />
+
           <div className="btn-row">
             <button
               className="btn btn-ghost"
@@ -415,7 +430,7 @@ export default function SmiqForm() {
               className={`btn btn-primary${submitting ? " loading" : ""}`}
               id="submit-btn"
               onClick={handleSubmit}
-              disabled={submitting || !state.name.trim() || !state.email.trim()}
+              disabled={submitting || !state.name.trim() || !state.email.trim() || !state.turnstileToken}
               type="button"
             >
               <span className="btn-text">{t("common.submit", "Submit →")}</span>

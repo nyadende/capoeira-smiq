@@ -38,6 +38,8 @@ RESEND_FROM_EMAIL=...
 NEXT_PUBLIC_APP_URL=http://localhost:3001
 KIT_API_KEY=...
 KIT_TAG_ID_ROLE_...             # Kit (ConvertKit) tag IDs — role, graduation, language
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=...  # Cloudflare Turnstile — same real widget for local dev and production
+TURNSTILE_SECRET_KEY=...            # (localhost/127.0.0.1 are allow-listed on the widget)
 ```
 
 ```bash
@@ -57,11 +59,16 @@ npm run preview   # build + run locally in the Workers runtime
 npm run deploy    # build + deploy to Cloudflare
 ```
 
-Secrets (same keys as `.env.local`, excluding `NEXT_PUBLIC_APP_URL`) are set on the Worker with:
+Secrets (same keys as `.env.local`, excluding `NEXT_PUBLIC_APP_URL` and `NEXT_PUBLIC_TURNSTILE_SITE_KEY`) are set on the Worker with:
 
 ```bash
 npx wrangler secret bulk .env.local
 ```
+
+`NEXT_PUBLIC_*` vars are inlined into the client bundle at build time rather
+than read at Workers runtime — make sure `.env.local` has the real production
+Turnstile site key before running `npm run deploy`, not just pushed as a
+runtime secret afterward.
 
 Live at https://smiq.capoeirainternational.workers.dev.
 
