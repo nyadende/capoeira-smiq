@@ -8,10 +8,10 @@ import { smiqResponses, pendingSmiqSubmissions } from "@/db/schema";
 import { subscribeToKit } from "@/lib/kit";
 import { sendConfirmationEmail } from "@/lib/email";
 import { verifyTurnstileToken } from "@/lib/turnstile";
+import { SEGMENTS, TEACHING_ROLES, GRADUATION_LEVELS, LANGUAGES } from "@/lib/reference-data";
 
 export type SubmitPayload = {
   segment: string;
-  segmentLabel: string;
   smiqAnswer: string;
   teachingRole: string | null;
   graduationLevel: string | null;
@@ -27,7 +27,6 @@ export type SubmitResult =
 
 type NormalizedSubmitPayload = {
   segment: string;
-  segmentLabel: string;
   smiqAnswer: string;
   teachingRole: string | null;
   graduationLevel: string | null;
@@ -36,10 +35,10 @@ type NormalizedSubmitPayload = {
   lang: string;
 };
 
-const VALID_SEGMENTS = new Set(["curious", "student", "practitioner", "teacher", "lapsed"]);
-const VALID_TEACHING_ROLES = new Set(["classes", "own-school", "admin", "online"]);
-const VALID_GRADUATION_LEVELS = new Set(["monitor", "professor", "contra-mestre", "mestre", "grao-mestre", "ungraded"]);
-const SUPPORTED_LANGS = new Set(["en", "pt", "es", "fr"]);
+const VALID_SEGMENTS = new Set<string>(SEGMENTS.map((s) => s.code));
+const VALID_TEACHING_ROLES = new Set<string>(TEACHING_ROLES.map((r) => r.code));
+const VALID_GRADUATION_LEVELS = new Set<string>(GRADUATION_LEVELS.map((g) => g.code));
+const SUPPORTED_LANGS = new Set<string>(LANGUAGES.map((l) => l.code));
 
 function normalizeText(value: string | null | undefined): string {
   return value?.trim() ?? "";
@@ -47,7 +46,6 @@ function normalizeText(value: string | null | undefined): string {
 
 function validatePayload(payload: SubmitPayload): { ok: true; payload: NormalizedSubmitPayload } | { ok: false; error: string } {
   const segment = normalizeText(payload.segment).toLowerCase();
-  const segmentLabel = normalizeText(payload.segmentLabel);
   const smiqAnswer = normalizeText(payload.smiqAnswer);
   const teachingRole = normalizeText(payload.teachingRole);
   const graduationLevel = normalizeText(payload.graduationLevel);
@@ -55,7 +53,7 @@ function validatePayload(payload: SubmitPayload): { ok: true; payload: Normalize
   const email = normalizeText(payload.email).toLowerCase();
   const lang = SUPPORTED_LANGS.has(payload.lang) ? payload.lang : "en";
 
-  if (!segment || !segmentLabel || !smiqAnswer || !name || !email) {
+  if (!segment || !smiqAnswer || !name || !email) {
     return { ok: false, error: "Please fill in all required fields." };
   }
 
@@ -80,7 +78,6 @@ function validatePayload(payload: SubmitPayload): { ok: true; payload: Normalize
       ok: true,
       payload: {
         segment,
-        segmentLabel,
         smiqAnswer,
         teachingRole,
         graduationLevel,
@@ -95,7 +92,6 @@ function validatePayload(payload: SubmitPayload): { ok: true; payload: Normalize
     ok: true,
     payload: {
       segment,
-      segmentLabel,
       smiqAnswer,
       teachingRole: null,
       graduationLevel: null,
@@ -114,7 +110,7 @@ export async function submitResponse(
     return validated;
   }
 
-  const { segment, segmentLabel, smiqAnswer, teachingRole, graduationLevel, name, email, lang } =
+  const { segment, smiqAnswer, teachingRole, graduationLevel, name, email, lang } =
     validated.payload;
 
   if (!process.env.DATABASE_URL) {
@@ -141,7 +137,6 @@ export async function submitResponse(
       token,
       expiresAt,
       segment,
-      segmentLabel,
       smiqAnswer,
       teachingRole,
       graduationLevel,
@@ -179,7 +174,6 @@ export async function confirmResponse(token: string): Promise<{ ok: boolean }> {
   try {
     await db.insert(smiqResponses).values({
       segment: row.segment,
-      segmentLabel: row.segmentLabel,
       smiqAnswer: row.smiqAnswer,
       teachingRole: row.teachingRole,
       graduationLevel: row.graduationLevel,

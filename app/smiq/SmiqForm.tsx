@@ -186,7 +186,6 @@ export default function SmiqForm() {
 
     const result = await submitResponse({
       segment: state.segment,
-      segmentLabel: rawSegment.label,
       smiqAnswer: state.smiqAnswer,
       teachingRole: isTeacher ? state.teachingRole : null,
       graduationLevel: isTeacher ? state.graduationLevel : null,
