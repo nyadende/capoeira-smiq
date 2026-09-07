@@ -23,8 +23,8 @@ export const GRADUATION_LEVELS = [
 ] as const;
 
 export const LANGUAGES = [
-  { code: "en", label: "English" },
-  { code: "pt", label: "Português" },
-  { code: "es", label: "Español" },
-  { code: "fr", label: "Français" },
+  { code: "en", label: "English", dir: "ltr" },
+  { code: "pt", label: "Português", dir: "ltr" },
+  { code: "es", label: "Español", dir: "ltr" },
+  { code: "fr", label: "Français", dir: "ltr" },
 ] as const;
