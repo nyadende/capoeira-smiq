@@ -1,58 +1,30 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-
-// ── Type declaration for the vanilla-JS i18n engine (public/i18n.js) ──────────
-declare global {
-  interface Window {
-    i18n?: {
-      t: (key: string, vars?: Record<string, string>) => string;
-      setLanguage: (code: string) => Promise<void>;
-      getCurrentLang: () => string;
-      getLanguages: () => Array<{ code: string; label: string; dir: string }>;
-      on: (event: string, handler: (detail: unknown) => void) => void;
-      off: (event: string, handler: (detail: unknown) => void) => void;
-      applyDOM: () => void;
-    };
-  }
-}
-
-// ── Language registry ──────────────────────────────────────────────────────────
-// Mirrors SUPPORTED_LANGUAGES in public/i18n.js. Update both together.
-const LANGUAGES = [
-  { code: "en", label: "English",   flag: "🇬🇧" },
-  { code: "pt", label: "Português", flag: "🇧🇷" },
-  { code: "es", label: "Español",   flag: "🇪🇸" },
-  { code: "fr", label: "Français",  flag: "🇫🇷" },
-] as const;
+import { useState, useEffect, useRef, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+import { LANGUAGES } from "@/lib/reference-data";
+import { setLocale } from "./locale-actions";
 
 type LangCode = (typeof LANGUAGES)[number]["code"];
-const LANG_MAP = new Map(LANGUAGES.map((l) => [l.code, l]));
 
-function readStoredLang(): LangCode {
-  try {
-    const v = localStorage.getItem("capoeira-lang");
-    if (v && LANG_MAP.has(v as LangCode)) return v as LangCode;
-  } catch { /* private browsing */ }
-  return "en";
-}
+// ── Flags ──────────────────────────────────────────────────────────────────
+// Decorative only — not part of the shared locale registry in lib/reference-data.ts.
+const FLAGS: Record<LangCode, string> = {
+  en: "🇬🇧",
+  pt: "🇧🇷",
+  es: "🇪🇸",
+  fr: "🇫🇷",
+};
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export default function LangSwitcher() {
-  const [current, setCurrent] = useState<LangCode>(() => readStoredLang());
-  const [open, setOpen]       = useState(false);
-  const wrapRef               = useRef<HTMLDivElement>(null);
-
-  // Track engine changes after mount
-  useEffect(() => {
-    function onEngineChange(e: Event) {
-      const code = (e as CustomEvent<{ code: string }>).detail?.code as LangCode;
-      if (code && LANG_MAP.has(code)) setCurrent(code);
-    }
-    document.addEventListener("i18n:change", onEngineChange);
-    return () => document.removeEventListener("i18n:change", onEngineChange);
-  }, []);
+  const current = useLocale() as LangCode;
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   // Close on outside click
   useEffect(() => {
@@ -76,10 +48,14 @@ export default function LangSwitcher() {
 
   function select(code: LangCode) {
     setOpen(false);
-    window.i18n?.setLanguage(code);
+    if (code === current) return;
+    startTransition(async () => {
+      await setLocale(code);
+      router.refresh();
+    });
   }
 
-  const active = LANG_MAP.get(current) ?? LANGUAGES[0];
+  const active = LANGUAGES.find((l) => l.code === current) ?? LANGUAGES[0];
 
   return (
     <div className={`lang-switcher${open ? " lang-switcher--open" : ""}`} ref={wrapRef}>
@@ -92,8 +68,9 @@ export default function LangSwitcher() {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label="Select language"
+        disabled={isPending}
       >
-        <span className="lang-icon" aria-hidden="true">{active.flag}</span>
+        <span className="lang-icon" aria-hidden="true">{FLAGS[active.code]}</span>
         <span className="lang-label">{active.label}</span>
         <span className="lang-chevron" aria-hidden="true">▾</span>
       </button>
@@ -110,7 +87,7 @@ export default function LangSwitcher() {
               className={`lang-option${isActive ? " lang-option--active" : ""}`}
               onClick={() => select(lang.code)}
             >
-              <span aria-hidden="true">{lang.flag}</span>
+              <span aria-hidden="true">{FLAGS[lang.code]}</span>
               <span className="lang-option-code">{lang.code.toUpperCase()}</span>
               <span className="lang-option-name">{lang.label}</span>
             </li>
