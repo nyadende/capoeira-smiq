@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import SmiqForm from "./SmiqForm";
 import LangSwitcher from "../components/LangSwitcher";
 
@@ -9,12 +10,14 @@ export const metadata: Metadata = {
     "One question. Two minutes. Help shape the future of the global Capoeira community.",
 };
 
-export default function SmiqPage() {
+export default async function SmiqPage() {
+  const t = await getTranslations();
+
   return (
     <>
       <nav>
-        <Link href="/" className="nav-logo" data-i18n="smiq_nav.logo">
-          Capoeira International
+        <Link href="/" className="nav-logo">
+          {t("smiq_nav.logo")}
         </Link>
         <LangSwitcher />
       </nav>
