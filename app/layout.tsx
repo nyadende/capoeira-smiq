@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Spectral, EB_Garamond, JetBrains_Mono } from "next/font/google";
-import Script from "next/script";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale } from "next-intl/server";
+import { LANGUAGES } from "@/lib/reference-data";
 import "./globals.css";
 
 const spectral = Spectral({
@@ -29,19 +31,24 @@ export const metadata: Metadata = {
     "A community research initiative gathering the single biggest challenges of capoeiristas worldwide. One question. Every voice counts.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
+  const dir = LANGUAGES.find((l) => l.code === locale)?.dir ?? "ltr";
+
   return (
     <html
-      lang="en"
+      lang={locale}
+      dir={dir}
       className={`${spectral.variable} ${ebGaramond.variable} ${jetbrains.variable}`}
     >
       <body>
-        <Script src="/i18n.js" strategy="afterInteractive" />
-        <div className="glow-top" />
-        <div className="glow-bottom" />
-        {children}
+        <NextIntlClientProvider>
+          <div className="glow-top" />
+          <div className="glow-bottom" />
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );
